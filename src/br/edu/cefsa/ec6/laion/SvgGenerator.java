@@ -92,6 +92,8 @@ public class SvgGenerator {
 		pos.setX(newX);
 		pos.setY(newY);
 	}
+	
+	//the clock orientation is reversed because the y-axis on HTML is upside down
 	private void turnClockwise(Position pos){
 		int angle = pos.getAngle();
 		pos.setAngle((angle + this.incrementAngle) % 360);

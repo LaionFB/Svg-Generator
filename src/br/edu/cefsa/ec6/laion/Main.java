@@ -14,7 +14,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		try {
-			DolSystem dolSystem = new DolSystem(System.getProperty("user.dir") + "/inputs/input5.txt");
+			DolSystem dolSystem = new DolSystem(System.getProperty("user.dir") + "/inputs/input1.txt");
 
 			SvgGenerator svgGenerator = new SvgGenerator(dolSystem);
 			String svg = svgGenerator.generateSvg();

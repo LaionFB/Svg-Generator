@@ -27,7 +27,8 @@ public class DolSystem {
 			String[] firstLineData = content.get(0).split(", ");
 			this.n = Integer.parseInt(firstLineData[0].substring(2, firstLineData[0].length()));
 			this.d = Integer.parseInt(firstLineData[1].substring(2, firstLineData[1].length())) % 360;
-			this.a = (firstLineData.length > 2) ? Integer.parseInt(firstLineData[2].substring(2, firstLineData[2].length())) % 360 : 90;
+			this.a = 360 - ((firstLineData.length > 2) ? Integer.parseInt(firstLineData[2].substring(2, firstLineData[2].length())) % 360 : 90);
+			//Reversed angle because the y-axis on HTML is upside down
 		}
 		
 		
