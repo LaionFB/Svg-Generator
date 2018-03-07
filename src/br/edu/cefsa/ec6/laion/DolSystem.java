@@ -61,7 +61,7 @@ public class DolSystem {
 		return this.a;
 	}
 	
-	public String getLSystem(){
+	public String getTurtle(){
 		String lSystem = this.initiator;
 		String[] keys = this.generators.keySet().toArray(new String[this.generators.size()]);
 		Pattern p = Pattern.compile(this.stringJoin(keys, "|"));

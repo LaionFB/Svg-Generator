@@ -10,13 +10,15 @@ public class Main {
 
 		out.write(bytes);
 		out.close();
-	}	public static void main(String[] args) {
+	}
+
+	public static void main(String[] args) {
 		try {
-			DolSystem dolSystem = new DolSystem(System.getProperty("user.dir") + "/inputs/input1.txt");
+			DolSystem dolSystem = new DolSystem(System.getProperty("user.dir") + "/inputs/input5.txt");
 
 			SvgGenerator svgGenerator = new SvgGenerator(dolSystem);
 			String svg = svgGenerator.generateSvg();
-					
+	
 			saveOnDisk(System.getProperty("user.dir") + "/output.svg", svg);
 			System.out.println("Done!");
 		} catch (IOException e) {

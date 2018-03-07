@@ -8,7 +8,7 @@ public class SvgGenerator {
 	
 	private int incrementAngle;	
 	private int starterAngle;
-	private String lSystem;
+	private String turtle;
 	
 	public SvgGenerator(DolSystem dolSystem){
 		Locale.setDefault(Locale.ENGLISH);
@@ -16,19 +16,19 @@ public class SvgGenerator {
 		 
 		this.incrementAngle = dolSystem.getIncrementAngle();
 		this.starterAngle = dolSystem.getStarterAngle();
-		this.lSystem = dolSystem.getLSystem();
+		this.turtle = dolSystem.getTurtle();
 	}
 
 	public String generateSvg(){
 		Position currentPosition = this.getBestStartingPosition();
-		String svgTag = "<svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"000000\">";
+		String svgTag = "<svg xmlns=\"http://www.w3.org/2000/svg\">";
 		
-		char[] letters = this.lSystem.toCharArray();
+		char[] letters = this.turtle.toCharArray();
 		
 		for(char letter : letters){
-			String newPath = consume(letter, currentPosition);
-			if(!newPath.isEmpty())
-				svgTag += "\n   " + newPath;
+			String newLine = consume(letter, currentPosition);
+			if(!newLine.isEmpty())
+				svgTag += "\n   " + newLine;
 		}
 		
 		svgTag += "\n</svg>";
@@ -40,7 +40,7 @@ public class SvgGenerator {
 		double minX = 0;
 		double minY = 0;
 		
-		char[] letters = this.lSystem.toCharArray();
+		char[] letters = this.turtle.toCharArray();
 		
 		for(char letter : letters){
 			consume(letter, currentPosition);
@@ -54,7 +54,7 @@ public class SvgGenerator {
 	private String consume(char letter, Position pos){
 		switch(letter){
 			case 'F':
-				return this.newLinePath(pos);
+				return this.newLine(pos);
 			case 'f':
 				this.emptyMoviment(pos);
 				break;
@@ -68,20 +68,20 @@ public class SvgGenerator {
 		return new String();
 	}
 	
-	private String newLinePath(Position pos){
+	private String newLine(Position pos){
 		double rad = Math.toRadians(pos.getAngle());
 		
 		double newX = pos.getX() + STROKE_LENGTH * Math.cos(rad);
 		double newY = pos.getY() + STROKE_LENGTH * Math.sin(rad);
-
-		String path = "<path d=\"";
-		path += String.format("M %1$.3f %2$.3f L %3$.3f %4$.3f", pos.getX(), pos.getY(), newX, newY);
-		path += String.format("\" stroke=\"black\" stroke-width=\"%s\" fill=\"none\"/>", STROKE_WIDTH);
+		
+		String line = "<line ";
+		line += String.format("x1=\"%1$.3f\" y1=\"%2$.3f\" x2=\"%3$.3f\" y2=\"%4$.3f\"", pos.getX(), pos.getY(), newX, newY);
+		line += String.format(" style=\"stroke:black;stroke-width:%s\" />", STROKE_WIDTH);
 		
 		pos.setX(newX);
 		pos.setY(newY);
 		
-		return path;
+		return line;
 	}
 	private void emptyMoviment(Position pos){
 		double rad = Math.toRadians(pos.getAngle());
