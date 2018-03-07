@@ -6,14 +6,16 @@ public class SvgGenerator {
 	private final static int STROKE_WIDTH = 1;
 	private final static int STROKE_LENGTH = 10;
 	
-	private int angle;
+	private int incrementAngle;	
+	private int starterAngle;
 	private String lSystem;
 	
 	public SvgGenerator(DolSystem dolSystem){
 		Locale.setDefault(Locale.ENGLISH);
 		//otherwise the double values could be wrote as 0,00 instead of 0.00 
 		 
-		this.angle = dolSystem.getAngle();
+		this.incrementAngle = dolSystem.getIncrementAngle();
+		this.starterAngle = dolSystem.getStarterAngle();
 		this.lSystem = dolSystem.getLSystem();
 	}
 
@@ -34,7 +36,7 @@ public class SvgGenerator {
 	}
 	
 	private Position getBestStartingPosition(){
-		Position currentPosition = new Position(0, 0, this.angle);
+		Position currentPosition = new Position(0, 0, this.starterAngle);
 		double minX = 0;
 		double minY = 0;
 		
@@ -46,7 +48,7 @@ public class SvgGenerator {
 			minY = Math.min(minY, currentPosition.getY()); 
 		}
 		
-		return new Position((minX * -1) + (STROKE_WIDTH * 2), (minY * -1) + (STROKE_WIDTH * 2), this.angle);
+		return new Position((minX * -1) + (STROKE_WIDTH * 2), (minY * -1) + (STROKE_WIDTH * 2), this.starterAngle);
 	}
 	
 	private String consume(char letter, Position pos){
@@ -73,7 +75,7 @@ public class SvgGenerator {
 		double newY = pos.getY() + STROKE_LENGTH * Math.sin(rad);
 
 		String path = "<path d=\"";
-		path += String.format("M %1$.2f %2$.2f L %3$.2f %4$.2f", pos.getX(), pos.getY(), newX, newY);
+		path += String.format("M %1$.3f %2$.3f L %3$.3f %4$.3f", pos.getX(), pos.getY(), newX, newY);
 		path += String.format("\" stroke=\"black\" stroke-width=\"%s\" fill=\"none\"/>", STROKE_WIDTH);
 		
 		pos.setX(newX);
@@ -92,10 +94,10 @@ public class SvgGenerator {
 	}
 	private void turnClockwise(Position pos){
 		int angle = pos.getAngle();
-		pos.setAngle((angle + this.angle) % 360);
+		pos.setAngle((angle + this.incrementAngle) % 360);
 	}
 	private void turnAntilockwise(Position pos){
 		int angle = pos.getAngle();
-		pos.setAngle((angle + 360 - this.angle) % 360);		
+		pos.setAngle((angle + 360 - this.incrementAngle) % 360);		
 	}
 }

@@ -5,18 +5,19 @@ This app reads a .txt file that represents an automata as described in the book 
 The input file must follow the following pattern:
 
 ```
-n=<number-of-derivations>, d=<angle-increment>
+n=<number-of-derivations>, d=<angle-increment>, a=<initial-angle>
 <initiator>
 <generator>
 <generator>
 <generator>
 ...
 ```
-```
-for example
+_* initial angle is optional._
 
-n=3, d=90
-F-F-F-F
-F=F-FF--F-F
+for example
+```
+n=2, d=60, a=60
+F--F--F
+F=F+F--F+F
 ```
 There are some .txt files for testing, but you can make your own and replace the path to the file in the code.
